@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Palestine in 3D</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta property="og:title" content="Palestine in 3D" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://bothness.github.io/palestine-3d/" />
+  <meta property="og:image" content="https://bothness.github.io/palestine-3d/img/og.jpg" />
+  <meta property="og:image:type" content="image/jpeg" />
+  <meta property="og:description" content="Explore historic and present day maps of Palestine in 3-dimensions" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="description" content="Explore historic and present day maps of Palestine in 3-dimensions" />
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.css" rel="stylesheet" />
+  <link href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.css" rel="stylesheet" />
+  <link href="./css/app.css" rel="stylesheet" />
+</head>
+
+<body>
+  <div id="map">
+    <div id="left" class="map"></div>
+    <div id="right" class="map"></div>
+  </div>
+  <div id="control-panel">
+    <div class="block">
+      <span class="title">Palestine in 3D</span>
+    </div>
+    <div>
+      <input list="story-list" id="story-select" type="text" placeholder="Find a place..." /><datalist
+        id="story-list"></datalist><button title="Go!" class="btn-submit"
+        onclick="document.getElementById('story-select').blur()">Go!</button>
+    </div>
+    <div class="footer">
+      Map tiles: <a href="https://palopenmaps.org/" target="_blank">Palestine Open Maps</a>, <a
+        href="https://www.mapbox.com/maps/satellite/" target="_blank">Mapbox Satellite</a>.
+    </div>
+  </div>
+</body>
+
+<script src="https://unpkg.com/deck.gl@^8.2.3/dist.min.js"></script>
+<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.11.1/mapbox-gl.js'></script>
+<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-compare/v0.4.0/mapbox-gl-compare.js"></script>
+<script src="./js/app.js"></script>
+
+</html>
