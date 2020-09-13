@@ -30,13 +30,13 @@
       <span class="title">Palestine in 3D</span>
     </div>
     <div>
-      <input list="story-list" id="story-select" type="text" placeholder="Find a place..." /><datalist
+      <nobr><input list="story-list" id="story-select" type="text" placeholder="Find a place..." /><datalist
         id="story-list"></datalist><button title="Go!" class="btn-submit"
-        onclick="document.getElementById('story-select').blur()">Go!</button>
+        onclick="document.getElementById('story-select').blur()">Go!</button></nobr>
     </div>
-    <div class="footer">
-      Map tiles: <a href="https://palopenmaps.org/" target="_blank">Palestine Open Maps</a>, <a
-        href="https://www.mapbox.com/maps/satellite/" target="_blank">Mapbox Satellite</a>.
+    <div class="slidecontainer">
+      <p>Height multiplier <strong>x <span id="height-value"></span></strong></p>
+      <input type="range" value="1.5" min="0.0" max="3.0" step="0.1" class="slider" id="height-select">
     </div>
   </div>
 </body>

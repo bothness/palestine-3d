@@ -2,6 +2,11 @@ const { DeckGL, TerrainLayer, MapboxLayer } = deck;
 
 mapboxgl.accessToken = 'pk.eyJ1IjoiYXJrYmFyY2xheSIsImEiOiJjamdxeDF3ZXMzN2IyMnFyd3EwdGcwMDVxIn0.P2bkpp8HGNeY3-FOsxXVvA';
 
+// Select DOM objects
+const storySelect = document.getElementById("story-select");
+const heightSelect = document.getElementById("height-select");
+const heightValue = document.getElementById("height-value");
+
 const year = new Date().getFullYear();
 
 const layers = {
@@ -10,9 +15,10 @@ const layers = {
   satellite: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.webp?sku=101p8KfWOJLrp&access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA'
 };
 
-const multiply = 1.5;
+var multiply = +heightSelect.value;
+heightValue.innerHTML = multiply.toFixed(1);
 
-const decoder = {
+var decoder = {
   rScaler: multiply * 256,
   gScaler: multiply,
   bScaler: multiply / 256,
@@ -32,7 +38,7 @@ const options = {
     zoom: 13.5,
     maxZoom: 14,
     bearing: 0,
-    pitch: 30,
+    pitch: 45,
     attributionControl: false
   },
   terrain: {
@@ -69,13 +75,13 @@ var data = [];
 
 rightMap.addControl(new mapboxgl.NavigationControl({ visualizePitch: true }));
 
-const pal40sLayer = new MapboxLayer({
+var pal40sLayer = new MapboxLayer({
   id: 'pal40s',
   texture: layers.pal20k,
   ...options.terrain
 });
 
-const satelliteLayer = new MapboxLayer({
+var satelliteLayer = new MapboxLayer({
   id: 'satellite',
   texture: layers.satellite,
   ...options.terrain
@@ -83,13 +89,16 @@ const satelliteLayer = new MapboxLayer({
 
 leftMap.on('load', () => {
   leftMap.addLayer(pal40sLayer);
+  leftMap.addControl(new mapboxgl.AttributionControl({
+    customAttribution: `<a href="https://palopenmaps.org/" target="_blank">Palestine Open Maps (1940s)</a>`
+    }), 'bottom-left');
 });
 
 rightMap.on('load', () => {
   rightMap.addLayer(satelliteLayer);
   rightMap.addControl(new mapboxgl.AttributionControl({
-    customAttribution: `<a href="https://palopenmaps.org/" target="_blank">Palestine Open Maps (1940s)</a>, <a href="https://www.mapbox.com/maps/satellite/" target="_blank">Mapbox Satellite (${year})</a>`
-    }));
+    customAttribution: `<a href="https://www.mapbox.com/maps/satellite/" target="_blank">Mapbox Satellite (${year})</a>`
+    }), 'bottom-right');
 });
 
 function genPlaces(data) {
@@ -101,7 +110,6 @@ function genPlaces(data) {
 }
 
 function addListeners() {
-  const storySelect = document.getElementById("story-select");
 
   storySelect.addEventListener("change", () => {
     document.getElementById('story-select').blur();
@@ -114,6 +122,25 @@ function addListeners() {
       zoom: 13.5,
       essential: true
     });
+  });
+
+  heightSelect.addEventListener("input", () => {
+    multiply = +heightSelect.value;
+    heightValue.innerHTML = multiply.toFixed(1);
+  })
+  heightSelect.addEventListener("change", () => {
+    decoder = {
+      rScaler: multiply * 256,
+      gScaler: multiply,
+      bScaler: multiply / 256,
+      offset: -32768 * multiply
+    };
+    pal40sLayer.props.elevationDecoder = decoder;
+    satelliteLayer.props.elevationDecoder = decoder;
+    leftMap.removeLayer('pal40s');
+    rightMap.removeLayer('satellite');
+    leftMap.addLayer(pal40sLayer);
+    rightMap.addLayer(satelliteLayer);
   });
 }
 
