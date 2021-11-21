@@ -12,7 +12,7 @@ const year = new Date().getFullYear();
 const layers = {
   terrain: 'https://tile.nextzen.org/tilezen/terrain/v1/256/terrarium/{z}/{x}/{y}.png?api_key=_WbqOjpNS6-ug4JaHzHcdw',
   pal20k: 'https://palopenmaps.org/tiles/pal20k-1940s/{z}/{x}/{y}@2x.jpg',
-  satellite: 'https://api.mapbox.com/v4/mapbox.satellite/{z}/{x}/{y}@2x.webp?sku=101p8KfWOJLrp&access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA'
+  satellite: 'https://server.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}?blankTile=false'
 };
 
 var multiply = +heightSelect.value;
